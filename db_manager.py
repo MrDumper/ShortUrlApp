@@ -34,7 +34,6 @@ class DBManager:
         return
 
     def get_short_by_long_url(self, long_url: str):
-        print('here')
         short_url_object = self.session.query(ShortUrl).join(LongUrl, ShortUrl.long_url_id == LongUrl.id).filter(
             LongUrl.url == long_url).first()
         return str(short_url_object.url)
@@ -46,7 +45,7 @@ class DBManager:
         return str(long_url_object.url)
 
     def create_short_url(self, short_url: str, id_long_url: int):
-        new_url = ShortUrl(url=id_long_url, long_url_id=short_url)
+        new_url = ShortUrl(long_url_id=id_long_url, url=short_url)
         self.session.add(new_url)
         self.session.commit()
         return
